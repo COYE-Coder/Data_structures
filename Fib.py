@@ -3,8 +3,6 @@
 # fib_list => [0,1,1,2,3,5,*8*]
 #Computes both recursively and with a list
 #Compares the two with scipy
-import sys
-sys.path.append("/Users/Thugg/opt/miniconda3/lib/python3.7/site-packages")
 
 from timeit import default_timer as timer
 import statistics
