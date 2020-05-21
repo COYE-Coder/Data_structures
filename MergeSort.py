@@ -1,4 +1,6 @@
 #Python implementation of merge sort
+#Not complete!!! Recursion needs changing
+#Also need to change merge() to be smarter
 
 import pprint
 import numpy as np
