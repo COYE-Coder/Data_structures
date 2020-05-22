@@ -17,14 +17,20 @@ def split(arr,n):
 def merge(lists):
 	iterate = range(0,len(lists),2)
 	num_smalls = len(lists)
+
+	#Define a list of empties
 	mergedLists = [[] for num in range(num_smalls)]
+
 	for listnum in iterate:
 		i,j = 0, 0
 		list1 = lists[listnum]
 		list2 = lists[listnum+1]
 
+		#While not reached the end of each component sublist
 		while i < len(list1) and j < len(list2):
 			if list1[i] < list2[j]:
+
+				#Append to mergedLists the appropriate element
 				mergedLists[listnum].append(list1[i])
 				i += 1
 			else:
@@ -32,7 +38,7 @@ def merge(lists):
 				j += 1
 
 
-			#If reached the end of any given list
+			#If reached the end of any given list, extends the sublist automatically
 			if i >= len(list1):
 				mergedLists[listnum].extend(list2[j:])
 			
