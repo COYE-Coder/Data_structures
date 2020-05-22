@@ -2,7 +2,6 @@
 
 import pprint
 import numpy as np
-import math
 
 #First define a split generator into n-sized lists using slices:
 def split(arr,n):
@@ -45,12 +44,14 @@ def merge(lists):
 			elif j >= len(list2):
 				mergedLists[listnum].extend(list1[i:])
 
+	#Remove all empty lists
 	mergedLists = [l for l in mergedLists if l != []]
 
 	return mergedLists
 
 
-#For readability, define another sorting function that sorts each split list
+#For readability, define another sorting function that sorts each split list 
+	#-- Only needed for the sublist of size 2, but works for any size sublist
 def sortSmall(lists):
 	#Iterate over each n-sized lists
 	for l in lists:
@@ -76,37 +77,29 @@ def sortSmall(lists):
 def mergeSort(arr):
 	n = len(arr)
 	isNested = any(isinstance(el, list) for el in arr)
-	print("Is nested: " + str(isNested))
 
 
 	#If input is already a list of lists, call recursively
 	if isNested:
-		sortedSmall = sortSmall(arr)
-		mergedLists = merge(sortedSmall)
+		if n > 1:
 
-		mergeSorted = mergeSort(mergedLists)
-		if len(mergeSorted) == 1:
-			print("Merge Sort Completed")
-			return list(mergeSorted)
-		else:
-			print("still sorting")
+			mergedLists = merge(sortSmall(arr))
+			mergeSorted = mergeSort(mergedLists)
+
+			#If mergeSort returns anything, continue recursion
+			if mergeSorted:
+				return mergeSorted
+			else:
+				return mergedLists[0]
 
 
 	#Using the split generator, divide lists into 2-sized lists to begin with		
 	else:
-		print("not nested")
 		lists = list(split(arr,2))
 		return mergeSort(lists)
 
 
-	# #We know that the number of times an array of len N must be merged is:
-	# # log2(N)-1
-	# numMerges = math.ceil((math.log(n,2) - 1))
-	# numIter = 0
 
-	# while numIter <= numMerges:
-
-	
 
 
 	
@@ -119,6 +112,6 @@ arr = np.random.randint(0,50,size=8).tolist()
 
 print("Original Array: " + str(arr))
 print("Sorted? :")
-mergeSort(arr)
+print(str(mergeSort(arr)))
 
 
