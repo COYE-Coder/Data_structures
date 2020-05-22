@@ -1,6 +1,4 @@
 #Python implementation of merge sort
-#Not complete!!! Recursion needs changing
-#Also need to change merge() to be smarter
 
 import pprint
 import numpy as np
@@ -18,8 +16,30 @@ def split(arr,n):
 # Comparing each list elementwise
 def merge(lists):
 	iterate = range(0,len(lists),2)
+	num_smalls = len(lists)
+	mergedLists = [[] for num in range(num_smalls)]
+	for listnum in iterate:
+		i,j = 0, 0
+		list1 = lists[listnum]
+		list2 = lists[listnum+1]
 
-	mergedLists = [lists[i]+lists[i+1] for i in iterate if i+1 < len(lists)]
+		while i < len(list1) and j < len(list2):
+			if list1[i] < list2[j]:
+				mergedLists[listnum].append(list1[i])
+				i += 1
+			else:
+				mergedLists[listnum].append(list2[j])
+				j += 1
+
+
+			#If reached the end of any given list
+			if i >= len(list1):
+				mergedLists[listnum].extend(list2[j:])
+			
+			elif j >= len(list2):
+				mergedLists[listnum].extend(list1[i:])
+
+	mergedLists = [l for l in mergedLists if l != []]
 
 	return mergedLists
 
