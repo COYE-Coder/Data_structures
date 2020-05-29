@@ -4,9 +4,16 @@ import numpy as np
 #Python implementation of quicksort
 
 
-def quicksort(arr):
+def quicksort(arr,lo=0,hi=False):
+	if not hi:
+		hi = len(arr)
 
+	arr = arr[lo:hi]
 	arr_length = len(arr)
+
+	print("Array at top: {}".format(arr))
+	if arr_length < 3:
+		return arr
 
 
 	if arr_length > 3:
@@ -15,7 +22,7 @@ def quicksort(arr):
 
 		#Set median as pivot
 		pivot = int(np.percentile(last_n,50))
-		#print("Pivot = {}".format(pivot))
+		print("Pivot = {}".format(pivot))
 
 		#Guarantee to find the "right-most" pivot index
 		pivot_index = arr.index(pivot,arr_length-3,arr_length)
@@ -23,6 +30,7 @@ def quicksort(arr):
 
 	else:
 		pivot = arr[-1]
+		print("Pivot = {}".format(pivot))
 		pivot_index = len(arr)-1
 
 
@@ -48,24 +56,21 @@ def quicksort(arr):
 
 			#Increment pivot index
 			pivot_index -= 1
+		print("Array during while: {}".format(arr))
 
 		#Increment index- changes checked_element if pivot < c_e
 		i += 1
+	print("Pivot Index: {} ".format(pivot_index))
 
-
-	#Split array into two components above and below pivot
-	left_half = arr[:pivot_index]
-	right_half = arr[pivot_index:]
 
 
 	#If split concurs a small enough array, all pivots should be sorted
 
 	#Need to store original arr somewhere -- always returns None
-	if len(left_half) < 2 and len(right_half) < 2:
-		return arr
-
-	left_half_sorted = quicksort(left_half)
-	right_half_sorted = quicksort(right_half)
+	print("Array: {}".format(arr))
+	left_half_sorted = quicksort(arr,0,pivot_index)
+	right_half_sorted = quicksort(arr,pivot_index,len(arr)-1)
+	print("Left Half: {} \nRight Half: {}".format(left_half_sorted,right_half_sorted))
 	return left_half_sorted+right_half_sorted
 	
 
@@ -75,9 +80,9 @@ def quicksort(arr):
 
 
 
-# nested = np.random.randint(0,50,size=8).tolist()
+nested = np.random.randint(0,50,size=8).tolist()
 arr = [0, 4, 34, 17, 11, 49, 35, 38]
-print(quicksort(arr))
+print(quicksort(nested))
 # print(nested)
 # print(quicksort(nested))
 
