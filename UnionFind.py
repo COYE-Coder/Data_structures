@@ -1,5 +1,5 @@
 # Even smarter still!
-# Implementation of Union Find- uses the "Weighted Union" algorithm
+# Implementation of Union Find- uses the "Weighted Union" algorithm with Path compression
 
 class UnionFind:
     # First define a data structure
@@ -17,6 +17,9 @@ class UnionFind:
     def get_root(self, p):
         while self.d_structure[p] != p:
             p = self.d_structure[p]
+
+            # "Path Compression Improvement:
+            self.d_structure[p] = self.d_structure[self.d_structure[p]]
         return p
 
     def union(self, p, q):
